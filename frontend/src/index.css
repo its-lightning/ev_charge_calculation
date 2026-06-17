@@ -1,0 +1,404 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ─── Design tokens — pure black / zinc / neon crimson ─────────── */
+:root {
+  /* shadcn base */
+  --background:           oklch(0.00 0 0);
+  --foreground:           oklch(0.92 0 0);
+  --card:                 oklch(0.06 0.008 240);
+  --card-foreground:      oklch(0.92 0 0);
+  --popover:              oklch(0.06 0.008 240);
+  --popover-foreground:   oklch(0.92 0 0);
+  --primary:              oklch(0.60 0.24 18);
+  --primary-foreground:   oklch(0.98 0 0);
+  --secondary:            oklch(0.12 0.010 240);
+  --secondary-foreground: oklch(0.85 0 0);
+  --muted:                oklch(0.10 0.008 240);
+  --muted-foreground:     oklch(0.44 0.008 240);
+  --accent:               oklch(0.60 0.24 18);
+  --accent-foreground:    oklch(0.98 0 0);
+  --destructive:          oklch(0.55 0.22 25);
+  --border:               oklch(0.15 0.010 240);
+  --input:                oklch(0.10 0.008 240);
+  --ring:                 oklch(0.60 0.24 18);
+  --radius:               0.5rem;
+
+  /* Zeon tokens */
+  --zeon-red:       oklch(0.60 0.24 18);
+  --zeon-red-dim:   oklch(0.48 0.20 18);
+  --zeon-bg:        #000000;
+  --zeon-surface:   oklch(0.06 0.008 240);
+  --zeon-surface-2: oklch(0.10 0.008 240);
+  --zeon-border:    oklch(0.15 0.010 240);
+  --zeon-text-dim:  oklch(0.44 0.008 240);
+  --zeon-mono:      'JetBrains Mono', 'Fira Code', ui-monospace, Consolas, monospace;
+}
+
+@theme inline {
+  --color-background:           var(--background);
+  --color-foreground:           var(--foreground);
+  --color-card:                 var(--card);
+  --color-card-foreground:      var(--card-foreground);
+  --color-primary:              var(--primary);
+  --color-primary-foreground:   var(--primary-foreground);
+  --color-secondary:            var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted:                var(--muted);
+  --color-muted-foreground:     var(--muted-foreground);
+  --color-accent:               var(--accent);
+  --color-accent-foreground:    var(--accent-foreground);
+  --color-destructive:          var(--destructive);
+  --color-border:               var(--border);
+  --color-input:                var(--input);
+  --color-ring:                 var(--ring);
+  --radius-lg: var(--radius);
+}
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  body { @apply bg-background text-foreground; }
+  html { @apply font-sans; }
+}
+
+/* ─── Base ──────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0; padding: 0;
+  width: 100%; height: 100%;
+  background: var(--zeon-bg);
+  color: var(--foreground);
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior: none;
+}
+
+#root {
+  width: 100%;
+  max-width: 480px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Scrollbar — dark minimal (tree-demo style) ────────────────── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: #1c1c1e; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #2a2a2e; }
+
+/* ─── Navbar ─────────────────────────────────────────────────────── */
+.zeon-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid var(--zeon-border);
+  background: #000;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+  flex-shrink: 0;
+}
+
+.zeon-navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.zeon-navbar-diamond {
+  width: 1.125rem;
+  height: 1.125rem;
+  border: 1.5px solid oklch(0.40 0.016 240);
+  transform: rotate(45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.zeon-navbar-diamond-inner {
+  width: 0.45rem;
+  height: 0.45rem;
+  background: var(--zeon-red);
+  transform: rotate(-45deg);
+  box-shadow: 0 0 6px var(--zeon-red);
+}
+
+.zeon-navbar-title {
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.zeon-navbar-meta {
+  color: oklch(0.35 0.008 240);
+  font-size: 0.6875rem;
+  font-family: var(--zeon-mono);
+}
+
+/* ─── Header/Hero section ────────────────────────────────────────── */
+.zeon-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem 1.25rem 1.25rem;
+  background: linear-gradient(180deg, oklch(0.06 0.010 240) 0%, #000 100%);
+  border-bottom: 1px solid var(--zeon-border);
+  flex-shrink: 0;
+}
+
+/* ─── Timer ──────────────────────────────────────────────────────── */
+.zeon-timer {
+  font-family: var(--zeon-mono);
+  font-size: clamp(3rem, 18vw, 5.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--zeon-red);
+  text-shadow:
+    0 0 20px oklch(0.60 0.24 18 / 0.7),
+    0 0 60px oklch(0.60 0.24 18 / 0.3);
+}
+
+.zeon-timer.paused {
+  color: oklch(0.65 0.08 240);
+  text-shadow: 0 0 16px oklch(0.65 0.08 240 / 0.4);
+}
+.zeon-timer.complete {
+  color: oklch(0.72 0.16 145);
+  text-shadow: 0 0 20px oklch(0.72 0.16 145 / 0.5);
+}
+.zeon-timer.error {
+  color: oklch(0.40 0.008 240);
+  font-size: clamp(1.5rem, 9vw, 2.5rem);
+  text-shadow: none;
+  letter-spacing: 0.05em;
+}
+
+/* Glow pulse while charging */
+@keyframes glow-pulse {
+  0%, 100% {
+    text-shadow:
+      0 0 20px oklch(0.60 0.24 18 / 0.7),
+      0 0 60px oklch(0.60 0.24 18 / 0.3);
+  }
+  50% {
+    text-shadow:
+      0 0 32px oklch(0.60 0.24 18 / 1.0),
+      0 0 90px oklch(0.60 0.24 18 / 0.5);
+  }
+}
+.timer-ticking { animation: glow-pulse 2s ease-in-out infinite; }
+
+/* ─── Pulse dot ──────────────────────────────────────────────────── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1;   transform: scale(1); }
+  50%       { opacity: 0.2; transform: scale(0.55); }
+}
+.pulse-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--zeon-red);
+  box-shadow: 0 0 6px var(--zeon-red);
+  animation: pulse-dot 1.2s ease-in-out infinite;
+}
+.pulse-dot.paused  { background: oklch(0.55 0.06 240); box-shadow: none; animation: none; }
+.pulse-dot.complete{ background: oklch(0.72 0.16 145); box-shadow: 0 0 6px oklch(0.72 0.16 145); animation: none; }
+.pulse-dot.error   { background: oklch(0.30 0.006 240); box-shadow: none; animation: none; }
+
+/* ─── Card ───────────────────────────────────────────────────────── */
+.zeon-card {
+  background: var(--zeon-surface);
+  border: 1px solid var(--zeon-border) !important;
+  border-radius: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.zeon-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(150deg, oklch(0.60 0.24 18 / 0.03) 0%, transparent 45%);
+}
+
+/* ─── Section heading (like tree-demo labels) ────────────────────── */
+.zeon-section-label {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: oklch(0.35 0.008 240);
+  font-family: var(--zeon-mono);
+}
+
+/* ─── Stats grid ─────────────────────────────────────────────────── */
+.zeon-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+.zeon-stat-label {
+  font-size: 0.6875rem;
+  color: oklch(0.38 0.008 240);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.zeon-stat-value {
+  font-family: var(--zeon-mono);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+.zeon-stat-unit {
+  font-size: 0.6875rem;
+  color: oklch(0.40 0.008 240);
+  margin-left: 0.15rem;
+}
+
+/* ─── Progress bar ───────────────────────────────────────────────── */
+.zeon-progress-track {
+  width: 100%;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--zeon-surface-2);
+  position: relative;
+  overflow: visible;
+}
+.zeon-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--zeon-red), var(--zeon-red-dim));
+  box-shadow: 0 0 8px oklch(0.60 0.24 18 / 0.5);
+  transition: width 0.4s ease;
+  position: relative;
+}
+/* Tick marks at 25/50/75 */
+.zeon-progress-tick {
+  position: absolute;
+  top: -4px;
+  width: 1px;
+  height: 13px;
+  background: oklch(0.20 0.008 240);
+  pointer-events: none;
+}
+
+/* ─── Separator ──────────────────────────────────────────────────── */
+.zeon-sep { background: var(--zeon-border); height: 1px; width: 100%; }
+
+/* ─── Range input ────────────────────────────────────────────────── */
+.zeon-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 36px;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+  touch-action: pan-y;
+}
+.zeon-range::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--zeon-red) 0%,
+    var(--zeon-red) var(--fill-pct, 0%),
+    var(--zeon-surface-2) var(--fill-pct, 0%)
+  );
+}
+.zeon-range::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--zeon-surface-2);
+  border: none;
+}
+.zeon-range::-moz-range-progress {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--zeon-red);
+}
+.zeon-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid var(--zeon-red);
+  background: oklch(0.08 0.008 240);
+  box-shadow: 0 0 8px oklch(0.60 0.24 18 / 0.55);
+  margin-top: -8px;
+  cursor: grab;
+  transition: box-shadow 0.12s ease, transform 0.1s ease;
+}
+.zeon-range::-webkit-slider-thumb:active {
+  cursor: grabbing;
+  transform: scale(1.2);
+  box-shadow: 0 0 20px oklch(0.60 0.24 18 / 0.9);
+}
+.zeon-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--zeon-red);
+  background: oklch(0.08 0.008 240);
+  box-shadow: 0 0 8px oklch(0.60 0.24 18 / 0.55);
+  cursor: grab;
+}
+/* Hide number spinners */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+input[type="number"] { -moz-appearance: textfield; }
+
+/* ─── Finish-time pill ───────────────────────────────────────────── */
+.zeon-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background: oklch(0.60 0.24 18 / 0.07);
+  border: 1px solid oklch(0.60 0.24 18 / 0.18);
+}
+
+/* ─── API status badge ───────────────────────────────────────────── */
+.api-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.625rem;
+  font-family: var(--zeon-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.api-badge.ok   { color: oklch(0.65 0.14 145); background: oklch(0.65 0.14 145 / 0.08); border: 1px solid oklch(0.65 0.14 145 / 0.2); }
+.api-badge.err  { color: oklch(0.60 0.20 25);  background: oklch(0.60 0.20 25  / 0.08); border: 1px solid oklch(0.60 0.20 25  / 0.2); }
+.api-badge.idle { color: oklch(0.40 0.008 240); background: transparent; border: 1px solid var(--zeon-border); }
+
+/* ─── Charging power display ─────────────────────────────────────── */
+.zeon-kw-display {
+  font-family: var(--zeon-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--zeon-red);
+  text-shadow: 0 0 12px oklch(0.60 0.24 18 / 0.5);
+  line-height: 1;
+}
+.zeon-kw-display.paused {
+  color: oklch(0.40 0.008 240);
+  text-shadow: none;
+}

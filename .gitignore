@@ -1,0 +1,21 @@
+# Python
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Cloudflare / Credentials
+config.yml
+*.json
+
+# OS / Editor
+.DS_Store
+.vscode/
+.idea/
+
+# Node (frontend has its own .gitignore, but just in case)
+node_modules/
+dist/

@@ -1,0 +1,7 @@
+tunnel: your-tunnel-id-here
+credentials-file: /path/to/your/credentials/your-tunnel-id-here.json
+
+ingress:
+  - hostname: charge.yourdomain.com
+    service: http://localhost:5001
+  - service: http_status:404
